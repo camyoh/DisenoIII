@@ -117,52 +117,13 @@ void navidad(int pin, int nota, int duracion, int tiempo) {
 }
 void cancion() {
   int tempo = 5;
-
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, blanca, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, blanca, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, SOL4, negra, tempo);
-  navidad(8, DO4, negra, tempo);
-  navidad(8, RE4, negra, tempo);
-  navidad(8, MI4, redonda, tempo);
+  navidad(8, DO1, negra, tempo);
+  navidad(8, RE2, negra, tempo);
+  navidad(8, MI3, negra, tempo);
   navidad(8, FA4, negra, tempo);
-  navidad(8, FA4, negra, tempo);
-  navidad(8, FA4, blanca, tempo);
-  navidad(8, FA4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, blanca, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, RE4, negra, tempo);
-  navidad(8, RE4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, RE4, blanca, tempo);
-  navidad(8, SOL4, blanca, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, blanca, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, blanca, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, SOL4, negra, tempo);
-  navidad(8, DO4, negra, tempo);
-  navidad(8, RE4, negra, tempo);
-  navidad(8, MI4, redonda, tempo);
-  navidad(8, FA4, negra, tempo);
-  navidad(8, FA4, negra, tempo);
-  navidad(8, FA4, blanca, tempo);
-  navidad(8, FA4, negra, tempo);
-  navidad(8, MI4, negra, tempo);
-  navidad(8, MI4, blanca, tempo);
-  navidad(8, SOL4, negra, tempo);
-  navidad(8, SOL4, negra, tempo);
-  navidad(8, FA4, negra, tempo);
-  navidad(8, RE4, negra, tempo);
-  navidad(8, DO4, redonda, tempo);
+  navidad(8, SOL5, negra, tempo);
+  navidad(8, LA6, negra, tempo);
+  navidad(8, SI7, negra, tempo);
 }
 
 void setup() {
@@ -174,7 +135,7 @@ void setup() {
 }
 
 void loop() {
-  cancion();
+digitalWrite(LED_BUILTIN, HIGH);
   mpu6050.update();
   ax = abs(mpu6050.getAngleX());
   ay = abs(mpu6050.getAngleY());
@@ -186,24 +147,26 @@ void loop() {
   azz = abs(mpu6050.getAngleZ());
   delay(250);
   mov = abs(ax - axx) + abs(ay - ayy) + abs(az - azz);
-  if (mov > 5) {
-    digitalWrite(LED_BUILTIN, HIGH);
+  if (mov > 3) {
+    //digitalWrite(LED_BUILTIN, HIGH);
+    //cancion();
+    navidad(8, SI7, redondap, 5);
   }
-  else
-    digitalWrite(LED_BUILTIN, LOW);
-  //  Serial.print("\nmov: ");Serial.print(mov);
-  //  Serial.print("\ty: ");Serial.print(ay);
-  //  Serial.print("\tz: ");Serial.print(az);
-  //  Serial.print("\nxx: ");Serial.print(axx);
-  //  Serial.print("\tyy: ");Serial.print(ayy);
-  //  Serial.print("\tzz: ");Serial.print(azz);
-  //    Serial.print("angleX : "); Serial.print(anguloX);
-  //    Serial.print("\tangleY : "); Serial.print(anguloY);
-  //    Serial.print("\tangleZ : "); Serial.println(anguloZ);
-  //    digitalWrite(LED_BUILTIN, LOW);
+  //else
+    //digitalWrite(LED_BUILTIN, LOW);
+    //  Serial.print("\nmov: ");Serial.print(mov);
+    //  Serial.print("\ty: ");Serial.print(ay);
+    //  Serial.print("\tz: ");Serial.print(az);
+    //  Serial.print("\nxx: ");Serial.print(axx);
+    //  Serial.print("\tyy: ");Serial.print(ayy);
+    //  Serial.print("\tzz: ");Serial.print(azz);
+    //    Serial.print("angleX : "); Serial.print(anguloX);
+    //    Serial.print("\tangleY : "); Serial.print(anguloY);
+    //    Serial.print("\tangleZ : "); Serial.println(anguloZ);
+    //    digitalWrite(LED_BUILTIN, LOW);
 
-  //  Serial.println("=======================================================\n");
-  //  timer = millis();
-}
+    //  Serial.println("=======================================================\n");
+    //  timer = millis();
+  }
 
 
