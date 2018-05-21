@@ -12,13 +12,19 @@ void setup() {
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
-  strip.setBrightness(BRIGHTNESS);
+  strip.setBrightness(10);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 }
 void loop() {
-//  colorWipe(strip.Color(255, 0, 0), 50); // Red
-  strip.setPixelColor(0,strip.Color(255, 0, 0));
-  strip.show();
+  //  colorWipe(strip.Color(255, 0, 0), 50); // Red
+  for (int i = 1; i <= 10; i++) {
+    strip.setPixelColor(0, strip.Color(255, 0, 0));
+    strip.setBrightness(i * 10);
+    strip.begin();
+    strip.show();
+    delay(1000);
+  }
+
 }
 
