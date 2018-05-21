@@ -99,7 +99,16 @@
 #define fusa 6
 #define semifusa 3
 /************************************************************/
-
+/**************variables de los leds***************************/
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+#include <avr/power.h>
+#endif
+#define PIN 6
+#define NUM_LEDS 2
+#define BRIGHTNESS 50
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
+/****************************************************************/
 /**************variables del acelerometro*************************/
 #include <MPU6050_tockn.h>
 #include <Wire.h>
@@ -113,6 +122,12 @@ long timer = 0;
 void navidad(int pin, int nota, int duracion, int tiempo) {
   int tiempot = duracion * tiempo;
   tone(pin, nota, duracion);
+
+  strip.setPixelColor(0, strip.Color(255, 0, 0));
+  strip.setBrightness(100);
+  strip.begin();
+  strip.show();
+
   delay(tiempot);
 }
 void cancion() {
@@ -127,9 +142,20 @@ void cancion() {
 }
 const int motor = 9;
 void setup() {
+  /*****************configuracion de los leds*********************/
+  // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
+#if defined (__AVR_ATtiny85__)
+  if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+#endif
+  // End of trinket special code
+  strip.setBrightness(BRIGHTNESS);
+  strip.setPixelColor(0, strip.Color(255, 0, 0));
+  strip.begin();
+  strip.show(); // Initialize all pixels to 'off'
+  /*****************************************************************/
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(motor,OUTPUT);
-  digitalWrite(motor,LOW);
+  pinMode(motor, OUTPUT);
+  digitalWrite(motor, LOW);
   Serial.begin(9600);
   Wire.begin();
   mpu6050.begin();
@@ -137,7 +163,7 @@ void setup() {
 }
 
 void loop() {
-digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
   mpu6050.update();
   ax = abs(mpu6050.getAngleX());
   ay = abs(mpu6050.getAngleY());
@@ -153,23 +179,29 @@ digitalWrite(LED_BUILTIN, HIGH);
     //digitalWrite(LED_BUILTIN, HIGH);
     //cancion();
     navidad(8, SI7, redondap, 5);
-    digitalWrite(motor,HIGH);
+    digitalWrite(motor, HIGH);//prende el motor
   }
-  //else
-    //digitalWrite(LED_BUILTIN, LOW);
-    //  Serial.print("\nmov: ");Serial.print(mov);
-    //  Serial.print("\ty: ");Serial.print(ay);
-    //  Serial.print("\tz: ");Serial.print(az);
-    //  Serial.print("\nxx: ");Serial.print(axx);
-    //  Serial.print("\tyy: ");Serial.print(ayy);
-    //  Serial.print("\tzz: ");Serial.print(azz);
-    //    Serial.print("angleX : "); Serial.print(anguloX);
-    //    Serial.print("\tangleY : "); Serial.print(anguloY);
-    //    Serial.print("\tangleZ : "); Serial.println(anguloZ);
-    //    digitalWrite(LED_BUILTIN, LOW);
+  else
+  {
+    strip.setPixelColor(0, strip.Color(255, 0, 0));
+    strip.setBrightness(50);
+    strip.begin();
+    strip.show();
+  }
+  //digitalWrite(LED_BUILTIN, LOW);
+  //  Serial.print("\nmov: ");Serial.print(mov);
+  //  Serial.print("\ty: ");Serial.print(ay);
+  //  Serial.print("\tz: ");Serial.print(az);
+  //  Serial.print("\nxx: ");Serial.print(axx);
+  //  Serial.print("\tyy: ");Serial.print(ayy);
+  //  Serial.print("\tzz: ");Serial.print(azz);
+  //    Serial.print("angleX : "); Serial.print(anguloX);
+  //    Serial.print("\tangleY : "); Serial.print(anguloY);
+  //    Serial.print("\tangleZ : "); Serial.println(anguloZ);
+  //    digitalWrite(LED_BUILTIN, LOW);
 
-    //  Serial.println("=======================================================\n");
-    //  timer = millis();
-  }
+  //  Serial.println("=======================================================\n");
+  //  timer = millis();
+}
 
 
