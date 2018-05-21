@@ -125,9 +125,11 @@ void cancion() {
   navidad(8, LA6, negra, tempo);
   navidad(8, SI7, negra, tempo);
 }
-
+const int motor = 9;
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(motor,OUTPUT);
+  digitalWrite(motor,LOW);
   Serial.begin(9600);
   Wire.begin();
   mpu6050.begin();
@@ -151,6 +153,7 @@ digitalWrite(LED_BUILTIN, HIGH);
     //digitalWrite(LED_BUILTIN, HIGH);
     //cancion();
     navidad(8, SI7, redondap, 5);
+    digitalWrite(motor,HIGH);
   }
   //else
     //digitalWrite(LED_BUILTIN, LOW);
