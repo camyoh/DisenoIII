@@ -150,6 +150,7 @@ void setup() {
   // End of trinket special code
   strip.setBrightness(BRIGHTNESS);
   strip.setPixelColor(0, strip.Color(255, 0, 0));
+  strip.setPixelColor(1, strip.Color(255, 0, 0));
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   /*****************************************************************/
@@ -168,28 +169,31 @@ void loop() {
   ax = abs(mpu6050.getAngleX());
   ay = abs(mpu6050.getAngleY());
   az = abs(mpu6050.getAngleZ());
-  delay(250);
+  delay(50);
   mpu6050.update();
   axx = abs(mpu6050.getAngleX());
   ayy = abs(mpu6050.getAngleY());
   azz = abs(mpu6050.getAngleZ());
-  delay(250);
+  delay(50);
   mov = abs(ax - axx) + abs(ay - ayy) + abs(az - azz);
-  if (mov > 3) {
+  if (mov > 10) {
     //digitalWrite(LED_BUILTIN, HIGH);
     //cancion();
-    navidad(8, SI7, redondap, 5);
     digitalWrite(motor, HIGH);//prende el motor
+    //Serial.print("\nmov: ");Serial.print(mov);
+    navidad(8, SI7, redondap, 5);
+    digitalWrite(motor, LOW);//apaga el motor
   }
   else
   {
     strip.setPixelColor(0, strip.Color(255, 0, 0));
+    strip.setPixelColor(1, strip.Color(255, 0, 0));
     strip.setBrightness(50);
     strip.begin();
     strip.show();
   }
   //digitalWrite(LED_BUILTIN, LOW);
-  //  Serial.print("\nmov: ");Serial.print(mov);
+  Serial.print("\nmov: "); Serial.print(mov);
   //  Serial.print("\ty: ");Serial.print(ay);
   //  Serial.print("\tz: ");Serial.print(az);
   //  Serial.print("\nxx: ");Serial.print(axx);
