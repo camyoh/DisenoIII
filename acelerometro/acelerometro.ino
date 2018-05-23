@@ -155,6 +155,10 @@ void setup() {
   strip.show(); // Initialize all pixels to 'off'
   /*****************************************************************/
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(12,OUTPUT);//envia
+  pinMode(11,INPUT);//recibe
+  digitalWrite(12,HIGH);
+  digitalWrite(11,LOW);
   pinMode(motor, OUTPUT);
   digitalWrite(motor, LOW);
   Serial.begin(9600);
@@ -192,8 +196,16 @@ void loop() {
     strip.begin();
     strip.show();
   }
+//  Serial.print("\n");Serial.print(digitalRead(11));
+  if(digitalRead(11)==HIGH)
+  {
+    digitalWrite(motor, HIGH);//prende el motor
+    delay(1000);
+    digitalWrite(motor, LOW);//prende el motor
+    delay(1000);
+    }
   //digitalWrite(LED_BUILTIN, LOW);
-  Serial.print("\nmov: "); Serial.print(mov);
+//  Serial.print("\nmov: "); Serial.print(mov);
   //  Serial.print("\ty: ");Serial.print(ay);
   //  Serial.print("\tz: ");Serial.print(az);
   //  Serial.print("\nxx: ");Serial.print(axx);
